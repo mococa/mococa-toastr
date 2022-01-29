@@ -19,7 +19,7 @@ const Component = () => {
       <button
         onClick={() =>
           toastr.success('Sweet!', 'here is a success message', {
-            delay: 5000,
+            timeout: 5000,
           })
         }
       >
@@ -33,7 +33,7 @@ const Component = () => {
           toastr.warning(
             'Alert!',
             "be sure you're doing what you think you're doing",
-            { delay: 30000 }
+            { timeout: 30000 }
           )
         }
       >

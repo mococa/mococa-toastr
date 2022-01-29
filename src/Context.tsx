@@ -41,7 +41,7 @@ export const ToastrProvider: React.FC<ProviderInterface> = ({
             type={toastr.type}
             title={toastr.title}
             message={toastr.message}
-            delay={toastr.delay || timeout || 5000}
+            timeout={toastr.timeout || timeout || 5000}
             onClose={(id) => {
               setToastrs((prevToastrs) =>
                 prevToastrs.filter((el) => el.id !== id)

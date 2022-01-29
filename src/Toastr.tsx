@@ -17,7 +17,7 @@ import {
 
 export const Toastr: React.FC<IToastr> = ({
   id,
-  delay,
+  timeout,
   title,
   message,
   type,
@@ -42,8 +42,8 @@ export const Toastr: React.FC<IToastr> = ({
   useEffect(() => {
     setTimeout(() => {
       setClosing(true);
-    }, delay || 5 * 1000);
-  }, [id, delay, setClosing]);
+    }, timeout || 5 * 1000);
+  }, [id, timeout, setClosing]);
 
   return (
     <Container

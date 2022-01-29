@@ -5,7 +5,7 @@ export enum ToastrTypes {
 }
 
 export interface ToastrOptions {
-  delay: number;
+  timeout: number;
   onClose?(): void | null;
 }
 
@@ -20,7 +20,7 @@ export interface ToastrCreation {
 
 export interface IToastr {
   id: string;
-  delay: number;
+  timeout: number;
   title: string;
   message: string;
   type: keyof typeof ToastrTypes;
