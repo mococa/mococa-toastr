@@ -18,16 +18,12 @@ export const ToastrProvider: React.FC = ({ children }) => {
   const [toastrs, setToastrs] = useState<IToastr[]>([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const toastrRoot = document.getElementById('toastr-root');
+    if (!toastrRoot) {
       const root = document.createElement('div');
       root.id = 'toastr-root';
       document.body.appendChild(root);
-    }, 200);
-  }, []);
-
-  useEffect(() => {
-    const toastrRoot = document.getElementById('toastr-root');
-    if (!toastrRoot) return;
+    }
 
     ReactDOM.render(
       <div className="toastr-container">
