@@ -1,5 +1,7 @@
 # mococa-toastr
 
+![image](https://user-images.githubusercontent.com/13316723/151679978-f47234ac-34aa-4b5a-9aa8-9e1680a51797.png)
+
 ### Installation
 
 ```
