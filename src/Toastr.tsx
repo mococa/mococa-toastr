@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { IToastr } from './interfaces';
 
@@ -23,14 +23,36 @@ export const Toastr: React.FC<IToastr> = ({
   type,
   onClose,
 }) => {
+  const [hovering, setHovering] = useState(false);
+  const [closing, setClosing] = useState(false);
+
   const handleClose = useCallback(() => onClose(id), [onClose, id]);
 
+  const handleMouseOver = () => setHovering(true);
+  const handleMouseOut = () => setHovering(false);
+
   useEffect(() => {
-    setTimeout(() => handleClose(), delay || 5 * 1000);
-  }, [id, delay, handleClose]);
+    if (closing) {
+      if (!hovering) {
+        setTimeout(() => handleClose(), 150);
+      }
+    }
+  }, [closing, hovering, handleClose]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setClosing(true);
+    }, delay || 5 * 1000);
+  }, [id, delay, setClosing]);
 
   return (
-    <Container aria-label={type} id={id}>
+    <Container
+      aria-label={type}
+      id={id}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseOut}
+      className={closing && !hovering ? 'removing' : ''}
+    >
       {type === 'success' && <SuccessIcon />}
       {type === 'error' && <ErrorIcon />}
       {type === 'warning' && <WarningIcon />}

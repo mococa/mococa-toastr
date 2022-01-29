@@ -7,23 +7,30 @@ import {
   ToastrCreation,
   ToastrOptions,
   ToastrTypes,
+  ProviderInterface,
 } from './interfaces';
 
 import { defaultOptions } from '.';
 import { Toastr } from './Toastr';
+import { genID } from './helpers';
 
 export const ToastrContext = createContext<ToastrCreation | null>(null);
 
-export const ToastrProvider: React.FC = ({ children }) => {
+export const ToastrProvider: React.FC<ProviderInterface> = ({
+  timeout,
+  children,
+}) => {
   const [toastrs, setToastrs] = useState<IToastr[]>([]);
 
   useEffect(() => {
     const toastrRoot = document.getElementById('toastr-root');
 
-    if (!toastrRoot)
-      return console.error(
-        'Please, add a div with id "toastr-root" to the dom (as child of body element)'
-      );
+    if (!toastrRoot) {
+      const root = document.createElement('div');
+      root.id = 'toastr-root';
+      document.body.append(root);
+      return;
+    }
 
     ReactDOM.render(
       <div className="toastr-container">
@@ -34,11 +41,12 @@ export const ToastrProvider: React.FC = ({ children }) => {
             type={toastr.type}
             title={toastr.title}
             message={toastr.message}
-            delay={toastr.delay || 5000}
+            delay={toastr.delay || timeout || 5000}
             onClose={(id) => {
               setToastrs((prevToastrs) =>
                 prevToastrs.filter((el) => el.id !== id)
               );
+              if (toastr.options?.onClose) return toastr.options?.onClose();
             }}
           />
         ))}
@@ -47,17 +55,22 @@ export const ToastrProvider: React.FC = ({ children }) => {
     );
   }, [toastrs]);
 
-  const genID = () => '_' + Math.random().toString(36).substr(2, 9);
-
   const createToastr = (
     type: keyof typeof ToastrTypes,
     title: string,
     message: string,
-    options: ToastrOptions = defaultOptions
+    options: ToastrOptions = defaultOptions(timeout)
   ) => {
     setToastrs((prevToastrs) => [
       ...prevToastrs,
-      { ...options, type, title, message, id: genID() },
+      {
+        onClose() {},
+        ...options,
+        type,
+        title,
+        message,
+        id: genID(),
+      },
     ]);
   };
 

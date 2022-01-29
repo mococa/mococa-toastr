@@ -11,3 +11,5 @@ export const lighten = (amount: number, color: string) => {
       )
   );
 };
+
+export const genID = () => '_' + Math.random().toString(36).substr(2, 9);

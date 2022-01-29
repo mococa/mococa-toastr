@@ -6,7 +6,7 @@ export * from './Toastr';
 export * from './styles';
 export * from './interfaces';
 
-export const defaultOptions: ToastrOptions = {
-  delay: 2500,
+export const defaultOptions = (delay?: number): ToastrOptions => ({
+  delay: delay || 5000,
   onClose() {},
-};
+});
