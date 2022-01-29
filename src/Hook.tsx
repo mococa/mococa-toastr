@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { defaultOptions } from '.';
 import { ToastrContext } from './Context';
 import { ToastrOptions } from './interfaces';
 
