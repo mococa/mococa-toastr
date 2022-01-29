@@ -18,16 +18,12 @@ export const ToastrProvider: React.FC = ({ children }) => {
   const [toastrs, setToastrs] = useState<IToastr[]>([]);
 
   useEffect(() => {
-    //setTimeout(() => {
-    const root = document.createElement('div');
-    root.id = 'toastr-root';
-    document.body.appendChild(root);
-    //}, 200);
-  }, []);
-
-  useEffect(() => {
     const toastrRoot = document.getElementById('toastr-root');
-    if (!toastrRoot) return;
+
+    if (!toastrRoot)
+      return console.error(
+        'Please, add a div with id "toastr-root" to the dom (as child of body element)'
+      );
 
     ReactDOM.render(
       <div className="toastr-container">
